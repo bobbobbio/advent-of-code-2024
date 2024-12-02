@@ -29,4 +29,4 @@ fn part_two(input: List<InputElement, TermWith<NewLine>>) -> i32 {
     list_1.iter().map(|e| e * list_2.get(e).unwrap_or(&0)).sum()
 }
 
-harness!();
+harness!(part_1: 1651298, part_2: 21306195);
