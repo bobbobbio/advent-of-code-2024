@@ -1,7 +1,11 @@
 use advent::prelude::*;
 
 fn is_safe(line: &[i32]) -> bool {
-    let diffs: Vec<_> = line.iter().zip(line.iter().skip(1)).map(|(a, b)| a - b).collect();
+    let diffs: Vec<_> = line
+        .iter()
+        .zip(line.iter().skip(1))
+        .map(|(a, b)| a - b)
+        .collect();
     diffs.iter().all(|&d| d > 0 && d <= 3) || diffs.iter().all(|&d| d < 0 && d >= -3)
 }
 

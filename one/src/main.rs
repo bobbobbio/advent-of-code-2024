@@ -4,7 +4,7 @@ use advent::prelude::*;
 #[parse(sep_by = "   ")]
 struct InputElement {
     a: i32,
-    b: i32
+    b: i32,
 }
 
 #[part_one]
@@ -15,7 +15,11 @@ fn part_one(input: List<InputElement, TermWith<NewLine>>) -> i32 {
     list_1.sort();
     list_2.sort();
 
-    list_1.into_iter().zip(list_2.into_iter()).map(|(a, b)| (a - b).abs()).sum()
+    list_1
+        .into_iter()
+        .zip(list_2.into_iter())
+        .map(|(a, b)| (a - b).abs())
+        .sum()
 }
 
 #[part_two]
