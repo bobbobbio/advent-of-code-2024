@@ -108,8 +108,7 @@ fn num_visited(path: Grid<PathCell>) -> usize {
     path.rows().map(|r| r.iter().map(|&c| c)).flatten().filter(|&c| c == PathCell::Visited).count()
 }
 
-#[part_one]
-fn part_one(input: Grid<MapCell>) -> usize {
+fn part_one_inner(input: Grid<MapCell>) -> Grid<PathCell> {
     let (mut y, mut x) = grid_find(&input, MapCell::Guard).unwrap();
 
     let mut path = path_from_grid(input);
@@ -119,7 +118,13 @@ fn part_one(input: Grid<MapCell>) -> usize {
             break;
         }
     }
+    path
+}
 
+
+#[part_one]
+fn part_one(input: Grid<MapCell>) -> usize {
+    let path = part_one_inner(input);
     num_visited(path)
 }
 
@@ -142,10 +147,11 @@ fn stuck_in_loop(input: Grid<MapCell>) -> bool {
 
 #[part_two]
 fn part_two(input: Grid<MapCell>) -> usize {
+    let path = part_one_inner(input.clone());
     let mut total = 0;
-    for y in 0..input.height() {
-        for x in 0..input.width() {
-            if input[y][x] == MapCell::Empty {
+    for y in 0..path.height() {
+        for x in 0..path.width() {
+            if path[y][x] == PathCell::Visited && input[y][x] == MapCell::Empty {
                 let mut test_input = input.clone();
                 test_input[y][x] = MapCell::Obstruction;
                 if stuck_in_loop(test_input) {
