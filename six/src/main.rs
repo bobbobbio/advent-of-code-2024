@@ -33,18 +33,33 @@ enum Direction {
     North,
     South,
     East,
-    West
+    West,
 }
 
 fn path_from_grid(input: Grid<MapCell>) -> Grid<PathCell> {
-    Grid::new(input.rows().map(|r| r.iter().map(|c| match c {
-        MapCell::Empty => PathCell::Unvisited,
-        MapCell::Obstruction => PathCell::Obstruction,
-        MapCell::Guard => PathCell::Visited,
-    }).collect()).collect()).unwrap()
+    Grid::new(
+        input
+            .rows()
+            .map(|r| {
+                r.iter()
+                    .map(|c| match c {
+                        MapCell::Empty => PathCell::Unvisited,
+                        MapCell::Obstruction => PathCell::Obstruction,
+                        MapCell::Guard => PathCell::Visited,
+                    })
+                    .collect()
+            })
+            .collect(),
+    )
+    .unwrap()
 }
 
-fn walk(path: &mut Grid<PathCell>, direction: &mut Direction, y: &mut usize, x: &mut usize) -> bool {
+fn walk(
+    path: &mut Grid<PathCell>,
+    direction: &mut Direction,
+    y: &mut usize,
+    x: &mut usize,
+) -> bool {
     path[*y][*x] = PathCell::Visited;
 
     match *direction {
@@ -57,7 +72,7 @@ fn walk(path: &mut Grid<PathCell>, direction: &mut Direction, y: &mut usize, x: 
                 return false;
             }
             *y -= 1;
-        },
+        }
         Direction::South => {
             if *y == path.height() - 1 {
                 return true;
@@ -66,8 +81,8 @@ fn walk(path: &mut Grid<PathCell>, direction: &mut Direction, y: &mut usize, x: 
                 *direction = Direction::West;
                 return false;
             }
-                *y += 1;
-        },
+            *y += 1;
+        }
         Direction::East => {
             if *x == path.width() - 1 {
                 return true;
@@ -78,7 +93,7 @@ fn walk(path: &mut Grid<PathCell>, direction: &mut Direction, y: &mut usize, x: 
                 return false;
             }
             *x += 1;
-        },
+        }
         Direction::West => {
             if *x == 0 {
                 return true;
@@ -88,7 +103,7 @@ fn walk(path: &mut Grid<PathCell>, direction: &mut Direction, y: &mut usize, x: 
                 return false;
             }
             *x -= 1;
-        },
+        }
     }
     false
 }
@@ -109,7 +124,6 @@ fn part_one_inner(input: Grid<MapCell>) -> Grid<PathCell> {
     }
     path
 }
-
 
 #[part_one]
 fn part_one(input: Grid<MapCell>) -> usize {
