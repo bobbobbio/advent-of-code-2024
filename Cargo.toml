@@ -3,6 +3,7 @@ members = [
     "five",
     "four",
     "one",
+    "six",
     "support/advent",
     "support/advent_macro",
     "support/parse",
@@ -11,6 +12,9 @@ members = [
     "two",
 ]
 resolver = "2"
+
+[profile.dev]
+opt-level = 2
 
 [workspace.dependencies]
 combine = "4.6.7"
