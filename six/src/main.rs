@@ -138,14 +138,12 @@ fn stuck_in_loop(input: Grid<MapCell>) -> bool {
 fn part_two(input: Grid<MapCell>) -> usize {
     let path = part_one_inner(input.clone());
     let mut total = 0;
-    for y in 0..path.height() {
-        for x in 0..path.width() {
-            if path[y][x] == PathCell::Visited && input[y][x] == MapCell::Empty {
-                let mut test_input = input.clone();
-                test_input[y][x] = MapCell::Obstruction;
-                if stuck_in_loop(test_input) {
-                    total += 1;
-                }
+    for (y, x) in path.positions() {
+        if path[y][x] == PathCell::Visited && input[y][x] == MapCell::Empty {
+            let mut test_input = input.clone();
+            test_input[y][x] = MapCell::Obstruction;
+            if stuck_in_loop(test_input) {
+                total += 1;
             }
         }
     }

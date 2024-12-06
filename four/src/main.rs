@@ -70,12 +70,10 @@ fn find_str(input: &Grid<char>, mut x: usize, mut y: usize, direction: Direction
 #[part_one]
 fn part_one(input: Grid<char>) -> u32 {
     let mut total = 0;
-    for x in 0..input.width() {
-        for y in 0..input.height() {
-            for direction in Direction::iter() {
-                if find_str(&input, x, y, direction, "XMAS") {
-                    total += 1;
-                }
+    for (y, x) in input.positions() {
+        for direction in Direction::iter() {
+            if find_str(&input, x, y, direction, "XMAS") {
+                total += 1;
             }
         }
     }
@@ -96,11 +94,9 @@ fn find_x_mas(input: &Grid<char>, x: usize, y: usize) -> bool {
 #[part_two]
 fn part_two(input: Grid<char>) -> u32 {
     let mut total = 0;
-    for x in 0..input.width() {
-        for y in 0..input.height() {
-            if find_x_mas(&input, x, y) {
-                total += 1;
-            }
+    for (y, x) in input.positions() {
+        if find_x_mas(&input, x, y) {
+            total += 1;
         }
     }
     total
