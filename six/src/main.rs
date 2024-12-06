@@ -36,17 +36,6 @@ enum Direction {
     West
 }
 
-fn grid_find(input: &Grid<MapCell>, value: MapCell) -> Option<(usize, usize)> {
-    for y in 0..input.height() {
-        for x in 0..input.width() {
-            if input[y][x] == value {
-                return Some((y, x))
-            }
-        }
-    }
-    None
-}
-
 fn path_from_grid(input: Grid<MapCell>) -> Grid<PathCell> {
     Grid::new(input.rows().map(|r| r.iter().map(|c| match c {
         MapCell::Empty => PathCell::Unvisited,
@@ -105,11 +94,11 @@ fn walk(path: &mut Grid<PathCell>, direction: &mut Direction, y: &mut usize, x: 
 }
 
 fn num_visited(path: Grid<PathCell>) -> usize {
-    path.rows().map(|r| r.iter().map(|&c| c)).flatten().filter(|&c| c == PathCell::Visited).count()
+    path.cells().filter(|&&c| c == PathCell::Visited).count()
 }
 
 fn part_one_inner(input: Grid<MapCell>) -> Grid<PathCell> {
-    let (mut y, mut x) = grid_find(&input, MapCell::Guard).unwrap();
+    let (mut y, mut x) = input.position(|&c| c == MapCell::Guard).unwrap();
 
     let mut path = path_from_grid(input);
     let mut direction = Direction::North;
@@ -129,7 +118,7 @@ fn part_one(input: Grid<MapCell>) -> usize {
 }
 
 fn stuck_in_loop(input: Grid<MapCell>) -> bool {
-    let (mut y, mut x) = grid_find(&input, MapCell::Guard).unwrap();
+    let (mut y, mut x) = input.position(|&c| c == MapCell::Guard).unwrap();
 
     let mut path = path_from_grid(input);
     let mut direction = Direction::North;
