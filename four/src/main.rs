@@ -1,6 +1,4 @@
 use advent::prelude::*;
-use strum::IntoEnumIterator as _;
-use strum_macros::EnumIter;
 
 #[derive(EnumIter)]
 enum Direction {

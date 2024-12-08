@@ -8,6 +8,5 @@ edition = "2021"
 [dependencies]
 advent.workspace = true
 parse.workspace = true
-strum = "0.26"
-strum_macros = "0.26"
+strum.workspace = true
 combine.workspace = true

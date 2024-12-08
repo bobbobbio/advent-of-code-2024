@@ -20,7 +20,8 @@ resolver = "2"
 
 [workspace.dependencies]
 combine = "4.6.7"
-derive_more = "1"
+derive_more = { version = "1", features = ["debug", "display"] }
+strum = { version = "0.26", features = ["derive"] }
 
 [workspace.dependencies.advent]
 path = "support/advent"
