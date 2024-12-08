@@ -143,17 +143,18 @@ fn stuck_in_loop(input: Grid<MapCell>) -> bool {
 #[part_two]
 fn part_two(input: Grid<MapCell>) -> usize {
     let path = part_one_inner(input.clone());
-    let mut total = 0;
+    let mut threads = vec![];
     for (y, x) in path.positions() {
         if path[y][x] == PathCell::Visited && input[y][x] == MapCell::Empty {
             let mut test_input = input.clone();
             test_input[y][x] = MapCell::Obstruction;
-            if stuck_in_loop(test_input) {
-                total += 1;
-            }
+            threads.push(std::thread::spawn(move || stuck_in_loop(test_input)));
         }
     }
-    total
+    threads
+        .into_iter()
+        .map(|h| h.join().unwrap() as usize)
+        .sum()
 }
 
 harness!(part_1: 5331, part_2: 1812);
