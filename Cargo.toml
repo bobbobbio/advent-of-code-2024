@@ -20,6 +20,7 @@ resolver = "2"
 
 [workspace.dependencies]
 combine = "4.6.7"
+derive_more = "1"
 
 [workspace.dependencies.advent]
 path = "support/advent"

@@ -9,3 +9,4 @@ edition = "2021"
 advent.workspace = true
 parse.workspace = true
 combine.workspace = true
+derive_more.workspace = true

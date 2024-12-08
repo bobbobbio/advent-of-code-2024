@@ -1,5 +1,4 @@
 use advent::prelude::*;
-use std::fmt;
 
 #[derive(HasParser, PartialEq, Eq, Copy, Clone)]
 enum MapCell {
@@ -11,21 +10,14 @@ enum MapCell {
     Guard,
 }
 
-#[derive(PartialEq, Eq, Copy, Clone)]
+#[derive(DisplayMore, PartialEq, Eq, Copy, Clone)]
 enum PathCell {
+    #[display(".")]
     Unvisited,
+    #[display("#")]
     Obstruction,
+    #[display("X")]
     Visited,
-}
-
-impl fmt::Display for PathCell {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Self::Unvisited => write!(f, "."),
-            Self::Obstruction => write!(f, "#"),
-            Self::Visited => write!(f, "X"),
-        }
-    }
 }
 
 #[derive(PartialEq, Eq, Copy, Clone, Hash)]

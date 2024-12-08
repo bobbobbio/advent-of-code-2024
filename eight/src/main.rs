@@ -1,5 +1,4 @@
 use advent::prelude::*;
-use std::fmt;
 
 #[derive(Copy, Clone, PartialEq, Eq, Hash)]
 struct Antenna(char);
@@ -18,19 +17,12 @@ enum InputCell {
     Empty,
 }
 
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone, DisplayMore, PartialEq, Eq)]
 enum Cell {
+    #[display("#")]
     AntiNode,
+    #[display(".")]
     Empty,
-}
-
-impl fmt::Display for Cell {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Self::AntiNode => write!(f, "#"),
-            Self::Empty => write!(f, "."),
-        }
-    }
 }
 
 fn third_point(a: usize, b: usize, bound: usize) -> Option<usize> {
