@@ -28,18 +28,10 @@ enum Cell {
 fn third_point(a: usize, b: usize, bound: usize) -> Option<usize> {
     if a > b {
         let delta = a - b;
-        if delta > b {
-            None
-        } else {
-            Some(b - delta)
-        }
+        (delta <= b).then(|| b - delta)
     } else {
         let delta = b - a;
-        if b + delta >= bound {
-            None
-        } else {
-            Some(b + delta)
-        }
+        (b + delta < bound).then(|| b + delta)
     }
 }
 
