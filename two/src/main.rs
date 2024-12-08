@@ -6,14 +6,14 @@ fn is_safe(line: &[i32]) -> bool {
         .zip(line.iter().skip(1))
         .map(|(a, b)| a - b)
         .collect();
-    diffs.iter().all(|&d| d > 0 && d <= 3) || diffs.iter().all(|&d| d < 0 && d >= -3)
+    diffs.iter().all(|&d| d > 0 && d <= 3) || diffs.iter().all(|&d| (-3..0).contains(&d))
 }
 
 #[part_one]
 fn part_one(input: List<List<i32, SepBy<Space>>, TermWith<NewLine>>) -> i32 {
     let mut safe = 0;
     for line in input {
-        if is_safe(&line.to_vec()) {
+        if is_safe(&line) {
             safe += 1;
         }
     }

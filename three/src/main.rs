@@ -16,7 +16,7 @@ struct MulList(Vec<Action>);
 impl HasParser for MulList {
     #[into_parser]
     fn parser() -> _ {
-        many1(attempt(Action::parser().map(|v| Some(v))).or(any().map(|_| None)))
+        many1(attempt(Action::parser().map(Some)).or(any().map(|_| None)))
             .map(|m: Vec<_>| Self(m.into_iter().flatten().collect()))
     }
 }

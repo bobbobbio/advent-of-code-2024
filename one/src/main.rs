@@ -17,7 +17,7 @@ fn part_one(input: List<InputElement, TermWith<NewLine>>) -> i32 {
 
     list_1
         .into_iter()
-        .zip(list_2.into_iter())
+        .zip(list_2)
         .map(|(a, b)| (a - b).abs())
         .sum()
 }
