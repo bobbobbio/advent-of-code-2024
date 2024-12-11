@@ -4,6 +4,7 @@ opt-level = 2
 [workspace]
 members = [
     "eight",
+    "eleven",
     "five",
     "four",
     "nine",
