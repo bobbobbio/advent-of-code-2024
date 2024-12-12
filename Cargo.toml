@@ -17,6 +17,7 @@ members = [
     "support/parse_macro",
     "ten",
     "three",
+    "twelve",
     "two",
 ]
 resolver = "2"
