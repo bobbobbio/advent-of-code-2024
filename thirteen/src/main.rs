@@ -72,19 +72,18 @@ fn minimum_cost(m: Machine) -> Option<i64> {
 
 #[part_one]
 fn part_one(input: List<Machine, SepBy<NewLine>>) -> i64 {
-    input.into_iter().map(|m| minimum_cost(m)).flatten().sum()
+    input.into_iter().filter_map(minimum_cost).sum()
 }
 
 #[part_two]
 fn part_two(input: List<Machine, SepBy<NewLine>>) -> i64 {
     input
         .into_iter()
-        .map(|mut m| {
+        .filter_map(|mut m| {
             m.prize.x += 10000000000000;
             m.prize.y += 10000000000000;
             minimum_cost(m)
         })
-        .flatten()
         .sum()
 }
 
