@@ -286,6 +286,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "eighteen"
+version = "0.1.0"
+dependencies = [
+ "advent",
+ "combine",
+ "derive_more",
+ "parse",
+ "strum",
+]
+
+[[package]]
 name = "eleven"
 version = "0.1.0"
 dependencies = [
@@ -1242,6 +1253,17 @@ dependencies = [
  "advent",
  "combine",
  "parse",
+]
+
+[[package]]
+name = "seventeen"
+version = "0.1.0"
+dependencies = [
+ "advent",
+ "combine",
+ "derive_more",
+ "parse",
+ "strum",
 ]
 
 [[package]]

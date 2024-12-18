@@ -4,6 +4,7 @@ opt-level = 2
 [workspace]
 members = [
     "eight",
+    "eighteen",
     "eleven",
     "fifteen",
     "five",
@@ -12,6 +13,7 @@ members = [
     "nine",
     "one",
     "seven",
+    "seventeen",
     "six",
     "sixteen",
     "support/advent",
