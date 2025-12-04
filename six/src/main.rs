@@ -20,14 +20,6 @@ enum PathCell {
     Visited,
 }
 
-#[derive(PartialEq, Eq, Copy, Clone, Hash)]
-enum Direction {
-    North,
-    South,
-    East,
-    West,
-}
-
 fn path_from_grid(input: Grid<MapCell>) -> Grid<PathCell> {
     Grid::new(
         input
@@ -48,50 +40,50 @@ fn path_from_grid(input: Grid<MapCell>) -> Grid<PathCell> {
 
 fn walk(
     path: &mut Grid<PathCell>,
-    direction: &mut Direction,
+    direction: &mut Direction4,
     y: &mut usize,
     x: &mut usize,
 ) -> bool {
     path[*y][*x] = PathCell::Visited;
 
     match *direction {
-        Direction::North => {
+        Direction4::North => {
             if *y == 0 {
                 return true;
             }
             if path[*y - 1][*x] == PathCell::Obstruction {
-                *direction = Direction::East;
+                *direction = Direction4::East;
                 return false;
             }
             *y -= 1;
         }
-        Direction::South => {
+        Direction4::South => {
             if *y == path.height() - 1 {
                 return true;
             }
             if path[*y + 1][*x] == PathCell::Obstruction {
-                *direction = Direction::West;
+                *direction = Direction4::West;
                 return false;
             }
             *y += 1;
         }
-        Direction::East => {
+        Direction4::East => {
             if *x == path.width() - 1 {
                 return true;
             }
 
             if path[*y][*x + 1] == PathCell::Obstruction {
-                *direction = Direction::South;
+                *direction = Direction4::South;
                 return false;
             }
             *x += 1;
         }
-        Direction::West => {
+        Direction4::West => {
             if *x == 0 {
                 return true;
             }
             if path[*y][*x - 1] == PathCell::Obstruction {
-                *direction = Direction::North;
+                *direction = Direction4::North;
                 return false;
             }
             *x -= 1;
@@ -108,7 +100,7 @@ fn part_one_inner(input: Grid<MapCell>) -> Grid<PathCell> {
     let (mut y, mut x) = input.position(|&c| c == MapCell::Guard).unwrap();
 
     let mut path = path_from_grid(input);
-    let mut direction = Direction::North;
+    let mut direction = Direction4::North;
     loop {
         if walk(&mut path, &mut direction, &mut y, &mut x) {
             break;
@@ -127,7 +119,7 @@ fn stuck_in_loop(input: Grid<MapCell>) -> bool {
     let (mut y, mut x) = input.position(|&c| c == MapCell::Guard).unwrap();
 
     let mut path = path_from_grid(input);
-    let mut direction = Direction::North;
+    let mut direction = Direction4::North;
     let mut visited = HashSet::new();
     loop {
         visited.insert((y, x, direction));

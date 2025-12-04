@@ -1,24 +1,5 @@
 use advent::prelude::*;
 
-#[derive(Copy, Clone, Debug, Hash, PartialEq, Eq, EnumIter)]
-enum Direction {
-    North,
-    South,
-    East,
-    West,
-}
-
-impl Direction {
-    fn advance(&self, y: usize, x: usize, width: usize, height: usize) -> Option<(usize, usize)> {
-        match self {
-            Self::North => (y > 0).then(|| (y - 1, x)),
-            Self::South => (y < height - 1).then(|| (y + 1, x)),
-            Self::West => (x > 0).then(|| (y, x - 1)),
-            Self::East => (x < width - 1).then(|| (y, x + 1)),
-        }
-    }
-}
-
 fn calculate_perimeter(
     iter: impl Iterator<Item = (usize, usize)>,
     width: usize,
@@ -27,7 +8,7 @@ fn calculate_perimeter(
     let mut perimeter = 0;
     let positions = HashSet::<(usize, usize)>::from_iter(iter);
     for &(y, x) in &positions {
-        for d in Direction::iter() {
+        for d in Direction4::iter() {
             if let Some((ny, nx)) = d.advance(y, x, width, height) {
                 if !positions.contains(&(ny, nx)) {
                     perimeter += 1;
@@ -47,7 +28,7 @@ fn calculate_groups(input: Grid<char>) -> (Grid<usize>, usize) {
     let mut group_connections = vec![];
     for (y, x) in input.positions() {
         let mut neighbor_groups = vec![];
-        for d in [Direction::North, Direction::West] {
+        for d in [Direction4::North, Direction4::West] {
             if let Some((ny, nx)) = d.advance(y, x, input.width(), input.height()) {
                 if input[ny][nx] != input[y][x] {
                     continue;
@@ -113,13 +94,13 @@ fn calculate_sides(
 
     let mut next_group = 0;
     let mut fences = Grid::new(vec![
-        vec![HashMap::<Direction, usize>::new(); width];
+        vec![HashMap::<Direction4, usize>::new(); width];
         height
     ])
     .unwrap();
     for &(y, x) in &positions {
         let mut my_fences = vec![];
-        for d in Direction::iter() {
+        for d in Direction4::iter() {
             if let Some((ny, nx)) = d.advance(y, x, width, height) {
                 if !positions.contains(&(ny, nx)) {
                     my_fences.push(d);
@@ -130,8 +111,8 @@ fn calculate_sides(
         }
         for fence in my_fences {
             let check = match &fence {
-                Direction::North | Direction::South => Direction::West,
-                Direction::East | Direction::West => Direction::North,
+                Direction4::North | Direction4::South => Direction4::West,
+                Direction4::East | Direction4::West => Direction4::North,
             };
 
             if let Some((ny, nx)) = check.advance(y, x, width, height) {

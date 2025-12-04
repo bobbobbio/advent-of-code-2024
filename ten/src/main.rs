@@ -9,25 +9,6 @@ impl HasParser for Digit {
     }
 }
 
-#[derive(EnumIter)]
-enum Direction {
-    North,
-    South,
-    East,
-    West,
-}
-
-impl Direction {
-    fn advance(&self, y: usize, x: usize, width: usize, height: usize) -> Option<(usize, usize)> {
-        match self {
-            Self::North => (y > 0).then(|| (y - 1, x)),
-            Self::South => (y < height - 1).then(|| (y + 1, x)),
-            Self::West => (x > 0).then(|| (y, x - 1)),
-            Self::East => (x < width - 1).then(|| (y, x + 1)),
-        }
-    }
-}
-
 fn find_trail_ends(
     input: &Grid<Digit>,
     trail_ends: &mut HashSet<(usize, usize)>,
@@ -39,7 +20,7 @@ fn find_trail_ends(
         return;
     }
 
-    for d in Direction::iter() {
+    for d in Direction4::iter() {
         if let Some((ny, nx)) = d.advance(y, x, input.width(), input.height()) {
             if input[ny][nx].0 != input[y][x].0 + 1 {
                 continue;
@@ -69,7 +50,7 @@ fn find_trails(input: &Grid<Digit>, y: usize, x: usize) -> u64 {
     }
 
     let mut total = 0;
-    for d in Direction::iter() {
+    for d in Direction4::iter() {
         if let Some((ny, nx)) = d.advance(y, x, input.width(), input.height()) {
             if input[ny][nx].0 != input[y][x].0 + 1 {
                 continue;
